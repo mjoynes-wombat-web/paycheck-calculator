@@ -1,7 +1,6 @@
 {
   "extends": "airbnb",
   "rules": {
-    "react/jsx-filename-extension": 1,
     "react/jsx-one-expression-per-line": 0
   },
   "env": {

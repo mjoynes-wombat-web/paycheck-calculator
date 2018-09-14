@@ -1,11 +1,13 @@
-
 {
   "name": "paycheck-calculator",
   "version": "0.1.0",
   "dependencies": {
     "next": "^6.1.2",
+    "normalize-css": "^2.3.1",
+    "prop-types": "^15.6.2",
     "react": "^16.5.1",
-    "react-dom": "^16.5.1"
+    "react-dom": "^16.5.1",
+    "styled-jsx-plugin-postcss": "^0.1.3"
   },
   "scripts": {
     "dev": "next",
@@ -17,6 +19,9 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.11.1"
+    "eslint-plugin-react": "^7.11.1",
+    "postcss-import": "^12.0.0",
+    "postcss-nested": "^4.1.0",
+    "postcss-preset-env": "^5.3.0"
   }
 }
