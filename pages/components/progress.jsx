@@ -46,13 +46,18 @@ const Progress = ({ steps, changeActiveStep, currentStep }) => {
                 transition: color 0.5s linear 0.5s;
               }
 
-              button {
-                background-color: transparent;
-                border: none;
+              a:link, a:visited {
+                text-decoration: none;
+                text-align: center;
                 color: white;
                 padding: 1rem;
-                transition: color 0.5s linear 0.5s;
+                transition: color 0.5s linear 0.5s, transform 0.5s;
                 font-size: 1.25rem;
+
+                :focus, :hover {
+                  outline: none;
+                  transform: scale(1.1) translateY(0.25rem);
+                }
               }
 
               &.complete {
@@ -75,9 +80,9 @@ const Progress = ({ steps, changeActiveStep, currentStep }) => {
       <ul>
         {steps.map(step => (
           <li key={step.id} className={step.complete ? 'complete' : ''}>
-            <button type="button" onClick={() => changeActiveStep(step.id)}>
+            <a href={`#${step.id}`} type="button" onClick={() => changeActiveStep(step.id)}>
               {step.text}
-            </button>
+            </a>
           </li>
         ))}
       </ul>
