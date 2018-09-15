@@ -7,6 +7,7 @@ import MainTemplate from './layout/main';
 import Progress from './components/progress';
 import Form from './components/form';
 import { NumInput, SelectInput } from '../helpers/inputClasses';
+import Error from './components/error';
 
 class Index extends Component {
   constructor() {
@@ -71,7 +72,7 @@ class Index extends Component {
       });
     }).catch((error) => {
       this.setState({
-        paycheckError: error,
+        paycheckError: error.response.data.description,
         currentStep: 0,
       });
     });
@@ -97,7 +98,7 @@ class Index extends Component {
   }
 
   render() {
-    const { steps, currentStep } = this.state;
+    const { steps, currentStep, paycheckError } = this.state;
     return (
       <MainTemplate>
         <Progress
@@ -113,6 +114,7 @@ class Index extends Component {
           changeActiveStep={this.changeActiveStep}
           submitForm={this.submitForm}
         />
+        <Error message={paycheckError} />
       </MainTemplate>
     );
   }
