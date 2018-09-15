@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import colors from '../../consts/colors';
 
 const Progress = ({ steps, changeActiveStep, currentStep }) => {
-  const completion = ((currentStep / steps.length) - (0.5 / steps.length)) * 100;
+  const completion = (((currentStep + 1) / steps.length) - (0.5 / steps.length)) * 100;
   return (
     <nav className="progress">
       <style jsx>
@@ -80,7 +80,7 @@ const Progress = ({ steps, changeActiveStep, currentStep }) => {
       <ul>
         {steps.map((step, i) => (
           <li key={step.id} className={`${step.complete ? 'complete' : ''} ${currentStep > i ? 'complete' : ''}`}>
-            <a href={`#${step.id}`} type="button" onClick={() => changeActiveStep(step.id)}>
+            <a href={`#${step.id}`} type="button" onClick={() => changeActiveStep(i)}>
               {step.shortLabel}
             </a>
           </li>
