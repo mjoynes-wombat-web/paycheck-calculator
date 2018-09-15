@@ -31,6 +31,7 @@ class NumInput extends Input {
 class SelectInput extends Input {
   constructor(text, label, options) {
     super(text, label);
+    [this.value] = options;
     this.type = 'select';
     this.options = options;
   }
@@ -70,8 +71,6 @@ class Index extends Component {
     steps[index].value = value;
     steps[index].valid = valid;
     steps[index].complete = true;
-
-    console.log(steps[index]);
 
     this.setState({ steps });
   }
