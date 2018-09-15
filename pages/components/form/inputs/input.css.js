@@ -10,6 +10,7 @@ const inputCSS = css`
     display: flex;
     flex-direction: column;
     pointer-events: none;
+    width: 50%;
 
     &.active {
       opacity: 1;
@@ -20,6 +21,7 @@ const inputCSS = css`
       color: white;
       font-size: 2rem;
       margin: 2rem;
+      text-align: center;
     }
 
     input, select {
@@ -31,6 +33,13 @@ const inputCSS = css`
       color: white;
       font-size: 2rem;
       appearance: none;
+      transition: transform 0.5s, box-shadow 0.5s;
+
+      :focus, :hover {
+        outline: none;
+        transform: scale(1.05);
+        box-shadow: 0.125rem 0.125rem 0.125rem black;
+      }
     }
   }
 `;
