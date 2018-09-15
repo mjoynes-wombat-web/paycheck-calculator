@@ -60,6 +60,16 @@ const Progress = ({ steps, changeActiveStep, currentStep }) => {
                 transition: color 0.5s linear 0.25s;
               }
 
+              &.current {
+                a {
+                  transform: scale(1.1) translateY(0.25rem);
+
+                  :focus, :hover {
+                    transform: none;
+                  }
+                }
+              }
+
               a:link, a:visited {
                 text-decoration: none;
                 text-align: center;
@@ -102,8 +112,8 @@ const Progress = ({ steps, changeActiveStep, currentStep }) => {
       </span>
       <ul>
         {steps.map((step, i) => (
-          <li key={step.id} className={`${step.complete ? 'complete' : ''} ${step.valid ? '' : 'invalid'}`}>
-            <a href={`#${step.id}`} type="button" onClick={() => changeActiveStep(i)}>
+          <li key={step.id} className={`${step.complete ? 'complete' : ''} ${step.valid ? '' : 'invalid'} ${currentStep === i ? 'current' : ''}`}>
+            <a href={`#${step.id}`} type="button" onClick={() => changeActiveStep(i)} aria-current={currentStep === i ? 'step' : null}>
               {step.shortLabel}
             </a>
           </li>
