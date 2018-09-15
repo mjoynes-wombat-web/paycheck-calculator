@@ -16,14 +16,14 @@ class NumInput extends Component {
       changeValue, index, min, max,
     } = this.props;
     const { target } = e;
-    const { validity: { valid } } = target;
+    const { validity: { valid, stepMismatch } } = target;
     let { value } = target;
     value = value.split('.').join('');
     value = value.length < 3 ? `${value}0` : value;
     value = parseFloat(value);
     if (Number.isNaN(value) || value < min * 100) value = min * 100;
     if (max && value > max) value = max;
-    return changeValue(value, index, valid);
+    return changeValue(value, index, valid || stepMismatch);
   }
 
   render() {
