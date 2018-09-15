@@ -12,6 +12,7 @@ class Index extends Component {
   constructor() {
     super();
     this.state = {
+      paychecksSubmitted: 0,
       steps: {
         hourlyWage: new NumInput('Hourly Wage', 'How much do you make an hour?', '', 0.01, 100),
         hours: new NumInput('Hours', 'How many hours are in this paycheck?', '', 0.01, 100),
@@ -21,6 +22,8 @@ class Index extends Component {
         exemptions: new NumInput('Exemptions', 'What number of exemptions do you get?', '', 0, 0, 0, 20),
       },
       currentStep: 0,
+      paychecks: [],
+      paycheckError: '',
     };
     this.nextStep = this.nextStep.bind(this);
     this.changeActiveStep = this.changeActiveStep.bind(this);
@@ -46,6 +49,31 @@ class Index extends Component {
         'Content-Type': 'application/x-www-form-urlencoded',
         Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUElfS0VZX01BTkFHRVIiLCJodHRwOi8vdGF4ZWUuaW8vdXNlcl9pZCI6IjU4NzI2MDUzY2UzN2E4MjM4NGFmYmYzMyIsImh0dHA6Ly90YXhlZS5pby9zY29wZXMiOlsiYXBpIl0sImlhdCI6MTQ4Mzg5MDc3MX0.GcPeCa2H1bi9BQx4uo_NypoQ4pGsd2aDRC9YjjvHG5s',
       },
+    }).then((response) => {
+      const { paychecks, paychecksSubmitted } = this.state;
+      const newPaycheck = {
+        id: `paycheck${paychecksSubmitted}`,
+        ...data,
+        taxes: response.data,
+      };
+      paychecks.unshift(newPaycheck);
+
+      const cleanSteps = Object.keys(steps).map((stepName) => {
+        const cleanStep = steps[stepName];
+        cleanStep.complete = false;
+        cleanStep.valid = true;
+
+        return cleanStep;
+      });
+
+      this.setState({
+        paychecks, paychecksSubmitted: paychecksSubmitted + 1, currentStep: 0, steps: cleanSteps,
+      });
+    }).catch((error) => {
+      this.setState({
+        paycheckError: error,
+        currentStep: 0,
+      });
     });
   }
 
