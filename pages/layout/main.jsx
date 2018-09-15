@@ -53,7 +53,10 @@ const MainTemplate = ({ pageTitle, children }) => (
 
 MainTemplate.propTypes = {
   pageTitle: PropTypes.string,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 };
 
 MainTemplate.defaultProps = {

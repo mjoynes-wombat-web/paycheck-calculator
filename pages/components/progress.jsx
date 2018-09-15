@@ -81,7 +81,7 @@ const Progress = ({ steps, changeActiveStep, currentStep }) => {
         {steps.map(step => (
           <li key={step.id} className={step.complete ? 'complete' : ''}>
             <a href={`#${step.id}`} type="button" onClick={() => changeActiveStep(step.id)}>
-              {step.text}
+              {step.shortLabel}
             </a>
           </li>
         ))}
