@@ -15,7 +15,7 @@ class Form extends Component {
 
   render() {
     const {
-      steps, currentStep, nextStep, changeValue, changeActiveStep,
+      steps, currentStep, nextStep, changeValue, changeActiveStep, submitForm,
     } = this.props;
     return (
       <form>
@@ -26,13 +26,13 @@ class Form extends Component {
           align-items: center;
           `}
         </style>
-        {steps.map((step, i) => {
-          switch (step.constructor.name) {
+        {Object.keys(steps).map((stepName, i) => {
+          switch (steps[stepName].constructor.name) {
             case 'NumInput':
               return (
                 <NumberInput
-                  key={step.id}
-                  {...step}
+                  key={steps[stepName].id}
+                  {...steps[stepName]}
                   currentStep={currentStep}
                   index={i}
                   nextStep={nextStep}
@@ -42,8 +42,8 @@ class Form extends Component {
             case 'SelectInput':
               return (
                 <SelectInput
-                  key={step.id}
-                  {...step}
+                  key={steps[stepName].id}
+                  {...steps[stepName]}
                   currentStep={currentStep}
                   index={i}
                   nextStep={nextStep}
@@ -54,18 +54,24 @@ class Form extends Component {
               return null;
           }
         })}
-        <Confirmation steps={steps} currentStep={currentStep} changeActiveStep={changeActiveStep} />
+        <Confirmation
+          steps={steps}
+          currentStep={currentStep}
+          changeActiveStep={changeActiveStep}
+          submitForm={submitForm}
+        />
       </form>
     );
   }
 }
 
 Form.propTypes = {
-  steps: PropTypes.arrayOf(PropTypes.object).isRequired,
+  steps: PropTypes.objectOf(PropTypes.object).isRequired,
   currentStep: PropTypes.number.isRequired,
   nextStep: PropTypes.func.isRequired,
   changeValue: PropTypes.func.isRequired,
   changeActiveStep: PropTypes.func.isRequired,
+  submitForm: PropTypes.func.isRequired,
 };
 
 export default Form;

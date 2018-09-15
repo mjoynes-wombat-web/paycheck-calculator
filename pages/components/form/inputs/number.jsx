@@ -13,17 +13,21 @@ class NumInput extends Component {
 
   onChange(e) {
     const {
-      changeValue, index, min, max,
+      changeValue, id, min, max, step,
     } = this.props;
     const { target } = e;
     const { validity: { valid, stepMismatch } } = target;
     let { value } = target;
     value = value.split('.').join('');
-    value = value.length < 3 ? `${value}0` : value;
-    value = parseFloat(value);
-    if (Number.isNaN(value) || value < min * 100) value = min * 100;
+    if (step === 0.01) {
+      value = value.length < 3 ? `${value}0` : value;
+      value = parseFloat(value);
+      if (Number.isNaN(value) || value < min * 100) value = min * 100;
+    } else {
+      value = parseFloat(value);
+    }
     if (max && value > max) value = max;
-    return changeValue(value, index, valid || stepMismatch);
+    return changeValue(value, id, valid || stepMismatch);
   }
 
   render() {

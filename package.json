@@ -2,11 +2,13 @@
   "name": "paycheck-calculator",
   "version": "0.1.0",
   "dependencies": {
+    "axios": "^0.18.0",
     "camelcase": "^5.0.0",
     "datasets-us-states-abbr": "^1.0.0",
     "next": "^6.1.2",
     "normalize-css": "^2.3.1",
     "prop-types": "^15.6.2",
+    "querystring": "^0.2.0",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
     "styled-jsx": "^3.0.2",

@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 
 import SubmitButton from './buttons/submit';
 
-const Confirmation = ({ steps, currentStep, changeActiveStep }) => (
-  <div className={`confirmation ${currentStep > steps.length - 1 ? 'active' : ''}`}>
+const Confirmation = ({
+ steps, currentStep, changeActiveStep, submitForm 
+}) => (
+  <div className={`confirmation ${currentStep > Object.keys(steps).length - 1 ? 'active' : ''}`}>
     <style jsx>
       {`
       .confirmation {
@@ -64,26 +66,27 @@ const Confirmation = ({ steps, currentStep, changeActiveStep }) => (
       `}
     </style>
     <ul>
-      {steps.map((step, i) => (
-        <li key={step.id}>
-          <a href={`#${step.id}`} onClick={() => changeActiveStep(i)}>
-            <span className="label">{step.shortLabel}:</span>
-            <span className="value">{step.step === 0.01 ? (step.value / 100).toFixed(2) : step.value}</span>
+      {Object.keys(steps).map((stepName, i) => (
+        <li key={steps[stepName].id}>
+          <a href={`#${steps[stepName].id}`} onClick={() => changeActiveStep(i)}>
+            <span className="label">{steps[stepName].shortLabel}:</span>
+            <span className="value">{steps[stepName].step === 0.01 ? (steps[stepName].value / 100).toFixed(2) : steps[stepName].value}</span>
           </a>
         </li>
       ))}
     </ul>
-    <SubmitButton />
+    <SubmitButton onClick={submitForm} />
   </div>
 );
 
 Confirmation.propTypes = {
-  steps: PropTypes.arrayOf(PropTypes.shape({
+  steps: PropTypes.objectOf(PropTypes.shape({
     id: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   })).isRequired,
   currentStep: PropTypes.number.isRequired,
   changeActiveStep: PropTypes.func.isRequired,
+  submitForm: PropTypes.func.isRequired,
 };
 
 export default Confirmation;

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import colors from '../../consts/colors';
 
 const Progress = ({ steps, changeActiveStep, currentStep }) => {
-  const completion = (((currentStep + 1) / steps.length) - (0.5 / steps.length)) * 100;
+  const completion = (((currentStep + 1) / Object.keys(steps).length) - (0.5 / Object.keys(steps).length)) * 100;
   return (
     <nav className="progress">
       <style jsx>
@@ -111,10 +111,10 @@ const Progress = ({ steps, changeActiveStep, currentStep }) => {
         {completion}% Done
       </span>
       <ul>
-        {steps.map((step, i) => (
-          <li key={step.id} className={`${step.complete ? 'complete' : ''} ${step.valid ? '' : 'invalid'} ${currentStep === i ? 'current' : ''}`}>
-            <a href={`#${step.id}`} type="button" onClick={() => changeActiveStep(i)} aria-current={currentStep === i ? 'step' : null}>
-              {step.shortLabel}
+        {Object.keys(steps).map((stepName, i) => (
+          <li key={steps[stepName].id} className={`${steps[stepName].complete ? 'complete' : ''} ${steps[stepName].valid ? '' : 'invalid'} ${currentStep === i ? 'current' : ''}`}>
+            <a href={`#${steps[stepName].id}`} type="button" onClick={() => changeActiveStep(i)} aria-current={currentStep === i ? 'step' : null}>
+              {steps[stepName].shortLabel}
             </a>
           </li>
         ))}
@@ -124,7 +124,7 @@ const Progress = ({ steps, changeActiveStep, currentStep }) => {
 };
 
 Progress.propTypes = {
-  steps: PropTypes.arrayOf(PropTypes.shape({
+  steps: PropTypes.objectOf(PropTypes.shape({
     id: PropTypes.text,
     text: PropTypes.text,
   })).isRequired,

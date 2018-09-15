@@ -25,7 +25,7 @@ export class NumInput extends Input {
 export class SelectInput extends Input {
   constructor(text, label, options) {
     super(text, label);
-    [this.value] = options;
+    this.value = options[0].value;
     this.type = 'select';
     this.options = options;
   }

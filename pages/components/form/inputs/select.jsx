@@ -13,10 +13,10 @@ class SelectInput extends Component {
   }
 
   onChange(e) {
-    const { changeValue, index } = this.props;
+    const { changeValue, id } = this.props;
     const { target } = e;
     const { validity: { valid }, value } = target;
-    return changeValue(value, index, valid);
+    return changeValue(value, id, valid);
   }
 
   render() {
@@ -32,7 +32,7 @@ class SelectInput extends Component {
           {label}
         </label>
         <select name={shortLabel} id={id} onChange={this.onChange} value={value}>
-          {options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+          {options.map(opt => <option key={opt.value} value={opt.value}>{opt.text}</option>)}
         </select>
         <NextButton id={id} currentStep={currentStep} onClick={nextStep} />
       </div>
@@ -45,11 +45,14 @@ SelectInput.propTypes = {
   shortLabel: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   complete: PropTypes.bool.isRequired,
-  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    text: PropTypes.string,
+  })).isRequired,
   currentStep: PropTypes.number.isRequired,
   nextStep: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   changeValue: PropTypes.func.isRequired,
 };
 

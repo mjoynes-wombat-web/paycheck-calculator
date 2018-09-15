@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import buttonCSS from './buttonCSS';
 
 const SubmitButton = ({ onClick }) => (
-  <button type="submit" onClick={(e) => { e.preventDefault(); console.log('submitted'); }}>
+  <button type="submit" onClick={onClick}>
     <style jsx>
       {buttonCSS}
     </style>
