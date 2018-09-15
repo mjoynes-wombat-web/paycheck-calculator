@@ -13,7 +13,9 @@ class Form extends Component {
   }
 
   render() {
-    const { steps, currentStep, nextStep } = this.props;
+    const {
+      steps, currentStep, nextStep, changeValue,
+    } = this.props;
     return (
       <form>
         <style jsx>
@@ -33,6 +35,7 @@ class Form extends Component {
                   currentStep={currentStep}
                   index={i}
                   nextStep={nextStep}
+                  changeValue={changeValue}
                 />
               );
             case 'SelectInput':
@@ -43,6 +46,7 @@ class Form extends Component {
                   currentStep={currentStep}
                   index={i}
                   nextStep={nextStep}
+                  changeValue={changeValue}
                 />
               );
             default:
@@ -59,6 +63,7 @@ Form.propTypes = {
   steps: PropTypes.arrayOf(PropTypes.object).isRequired,
   currentStep: PropTypes.number.isRequired,
   nextStep: PropTypes.func.isRequired,
+  changeValue: PropTypes.func.isRequired,
 };
 
 export default Form;

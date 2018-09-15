@@ -13,13 +13,14 @@ class Input {
     this.label = label;
     this.pattern = pattern;
     this.complete = false;
+    this.valid = true;
   }
 }
 
 class NumInput extends Input {
-  constructor(text, label, pattern, step = 0, min = 1, max = null) {
+  constructor(text, label, pattern, step = 0, value, min = 1, max = null) {
     super(text, label, pattern);
-    this.value = 0;
+    this.value = value;
     this.type = 'number';
     this.step = step;
     this.min = min;
@@ -40,25 +41,39 @@ class Index extends Component {
     super();
     this.state = {
       steps: [
-        new NumInput('Pay Rate', 'How much do you make an hour?', '', 0.01),
-        new NumInput('Hours', 'How many hours are in this paycheck?'),
+        new NumInput('Pay Rate', 'How much do you make an hour?', '', 0.01, 100),
+        new NumInput('Hours', 'How many hours are in this paycheck?', '', 0.01, 100),
         new SelectInput('Filing Status', 'What is your filing status?', ['Single', 'Married', 'Married Filing Separately', 'Head of Household']),
         new SelectInput('US State', 'What state do you live in?', usStates),
         new SelectInput('Pay Frequency', 'How often do you get paid?', ['Weekly', 'Bi-Weekly', 'Semi-Monthly', 'Monthly', 'Quarterly', 'Yearly']),
-        new NumInput('Exemptions', 'What number of exemptions do you get?', '', 0, 0, 20),
+        new NumInput('Exemptions', 'What number of exemptions do you get?', '', 0, 0, 0, 20),
       ],
       currentStep: 0,
     };
     this.nextStep = this.nextStep.bind(this);
     this.changeActiveStep = this.changeActiveStep.bind(this);
+    this.changeValue = this.changeValue.bind(this);
   }
 
   nextStep(currentStep) {
-    this.setState({ currentStep: currentStep + 1 });
+    const { steps } = this.state;
+    steps[currentStep].complete = true;
+    this.setState({ currentStep: currentStep + 1, steps });
   }
 
   changeActiveStep(step) {
     this.setState({ currentStep: step });
+  }
+
+  changeValue(value, index, valid) {
+    const { steps } = this.state;
+    steps[index].value = value;
+    steps[index].valid = valid;
+    steps[index].complete = true;
+
+    console.log(steps[index]);
+
+    this.setState({ steps });
   }
 
   render() {
@@ -66,7 +81,7 @@ class Index extends Component {
     return (
       <MainTemplate>
         <Progress steps={steps} currentStep={currentStep} changeActiveStep={this.changeActiveStep} />
-        <Form steps={steps} currentStep={currentStep} nextStep={this.nextStep} />
+        <Form steps={steps} currentStep={currentStep} nextStep={this.nextStep} changeValue={this.changeValue} />
       </MainTemplate>
     );
   }

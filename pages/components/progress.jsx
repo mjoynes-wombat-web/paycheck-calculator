@@ -9,6 +9,20 @@ const Progress = ({ steps, changeActiveStep, currentStep }) => {
     <nav className="progress">
       <style jsx>
         {`
+          @keyframes error-shake {
+            25% {
+              transform: translateX(-0.25rem);
+            }
+            50% {
+              transform: translateX(0.25rem);
+            }
+            75% {
+              transform: translateX(-0.25rem);
+            }
+            100% {
+              transform: translateX(0);
+            }
+          }
           span.progress-bar {
             display: inline-block;
             color: transparent;
@@ -64,6 +78,15 @@ const Progress = ({ steps, changeActiveStep, currentStep }) => {
                 :before, a {
                   color: ${colors.vividGreen()}
                 }
+
+                &.invalid {
+                  :before, a {
+                    color: ${colors.errorRed()};
+                    animation-name: error-shake;
+                    animation-duration: 0.5s;
+                    animation-delay: 0.5s;
+                  }
+                }
               }
             }
           }
@@ -79,7 +102,7 @@ const Progress = ({ steps, changeActiveStep, currentStep }) => {
       </span>
       <ul>
         {steps.map((step, i) => (
-          <li key={step.id} className={`${step.complete ? 'complete' : ''} ${currentStep > i ? 'complete' : ''}`}>
+          <li key={step.id} className={`${step.complete ? 'complete' : ''} ${step.valid ? '' : 'invalid'}`}>
             <a href={`#${step.id}`} type="button" onClick={() => changeActiveStep(i)}>
               {step.shortLabel}
             </a>
