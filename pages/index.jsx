@@ -1,41 +1,10 @@
 import React, { Component } from 'react';
-import camelCase from 'camelcase';
 import usStates from 'datasets-us-states-abbr';
 
 import MainTemplate from './layout/main';
 import Progress from './components/progress';
 import Form from './components/form';
-
-class Input {
-  constructor(shortLabel, label, pattern = '') {
-    this.id = camelCase(shortLabel);
-    this.shortLabel = shortLabel;
-    this.label = label;
-    this.pattern = pattern;
-    this.complete = false;
-    this.valid = true;
-  }
-}
-
-class NumInput extends Input {
-  constructor(text, label, pattern, step = 0, value, min = 1, max = null) {
-    super(text, label, pattern);
-    this.value = value;
-    this.type = 'number';
-    this.step = step;
-    this.min = min;
-    this.max = max;
-  }
-}
-
-class SelectInput extends Input {
-  constructor(text, label, options) {
-    super(text, label);
-    [this.value] = options;
-    this.type = 'select';
-    this.options = options;
-  }
-}
+import { NumInput, SelectInput } from '../helpers/inputClasses';
 
 class Index extends Component {
   constructor() {
