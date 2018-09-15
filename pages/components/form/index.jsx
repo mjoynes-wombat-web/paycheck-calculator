@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import NumberInput from './inputs/number';
 import SelectInput from './inputs/select';
+import Confirmation from './confirmation';
 
 class Form extends Component {
   constructor() {
@@ -53,7 +54,7 @@ class Form extends Component {
               return null;
           }
         })}
-        <button type="submit">Submit</button>
+        <Confirmation steps={steps} currentStep={currentStep} />
       </form>
     );
   }
