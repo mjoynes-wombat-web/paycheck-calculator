@@ -1,8 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import buttonCSS from './button.css';
+
 const NextButton = ({ id, currentStep, onClick }) => (
-  <button key={id} type="button" onClick={() => onClick(currentStep)}>Next</button>
+  <button key={id} type="button" onClick={() => onClick(currentStep)}>
+    <style jsx>
+      {buttonCSS}
+    </style>
+    Next
+  </button>
 );
 
 NextButton.propTypes = {
