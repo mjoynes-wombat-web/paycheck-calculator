@@ -2,11 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import NextButton from '../buttons/next';
+import inputCSS from './input.css';
 
 const NumInput = ({
   id, label, value, pattern, complete, step, min, max, currentStep, index, nextStep,
 }) => (
   <div className={`input-wrapper ${complete ? 'complete' : ''} ${currentStep === index ? 'active' : ''}`}>
+    <style jsx>
+      {inputCSS}
+    </style>
     <label htmlFor={id}>
       {label}
     </label>

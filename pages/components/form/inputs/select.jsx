@@ -2,11 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import NextButton from '../buttons/next';
+import inputCSS from './input.css';
+
 
 const SelectInput = ({
   id, shortLabel, label, complete, options, currentStep, nextStep, index,
 }) => (
   <div className={`input-wrapper ${complete ? 'complete' : ''} ${currentStep === index ? 'active' : ''}`}>
+    <style jsx>
+      {inputCSS}
+    </style>
     <label htmlFor={id}>
       {label}
     </label>
