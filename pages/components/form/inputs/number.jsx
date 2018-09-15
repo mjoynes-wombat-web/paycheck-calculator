@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import NextButton from '../buttons/next';
+
 const NumInput = ({
-  id, label, value, pattern, complete, step, min, max,
+  id, label, value, pattern, complete, step, min, max, currentStep, index, nextStep,
 }) => (
-  <div className={complete ? 'complete' : ''}>
+  <div className={`input-wrapper ${complete ? 'complete' : ''} ${currentStep === index ? 'active' : ''}`}>
     <label htmlFor={id}>
       {label}
-      <input type="number" id={id} value={value} pattern={pattern} step={step} min={min} max={max} />
     </label>
+    <input type="number" id={id} value={value} pattern={pattern} step={step} min={min} max={max} />
+    <NextButton id={id} currentStep={currentStep} onClick={nextStep} />
   </div>
 );
 
@@ -21,6 +24,9 @@ NumInput.propTypes = {
   step: PropTypes.number.isRequired,
   min: PropTypes.number.isRequired,
   max: PropTypes.number,
+  currentStep: PropTypes.number.isRequired,
+  index: PropTypes.number.isRequired,
+  nextStep: PropTypes.func.isRequired,
 };
 
 NumInput.defaultProps = {

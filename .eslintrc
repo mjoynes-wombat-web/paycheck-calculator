@@ -1,7 +1,8 @@
 {
   "extends": "airbnb",
   "rules": {
-    "react/jsx-one-expression-per-line": 0
+    "react/jsx-one-expression-per-line": 0,
+    "jsx-a11y/label-has-for": 1
   },
   "env": {
     "browser": true

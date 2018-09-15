@@ -49,6 +49,11 @@ class Index extends Component {
       ],
       currentStep: 0,
     };
+    this.nextStep = this.nextStep.bind(this);
+  }
+
+  nextStep(currentStep) {
+    this.setState({ currentStep: currentStep + 1 });
   }
 
   render() {
@@ -56,7 +61,7 @@ class Index extends Component {
     return (
       <MainTemplate>
         <Progress steps={steps} currentStep={currentStep} />
-        <Form steps={steps} />
+        <Form steps={steps} currentStep={currentStep} nextStep={this.nextStep} />
       </MainTemplate>
     );
   }
