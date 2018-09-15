@@ -14,6 +14,7 @@ const buttonCSS = css`
     width: 50%;
     border-radius: 0.5rem;
     align-self: center;
+    margin: 3rem;
 
     &:focus, &:hover {
       transform: scale(1.1);

@@ -15,7 +15,7 @@ class Form extends Component {
 
   render() {
     const {
-      steps, currentStep, nextStep, changeValue,
+      steps, currentStep, nextStep, changeValue, changeActiveStep,
     } = this.props;
     return (
       <form>
@@ -54,7 +54,7 @@ class Form extends Component {
               return null;
           }
         })}
-        <Confirmation steps={steps} currentStep={currentStep} />
+        <Confirmation steps={steps} currentStep={currentStep} changeActiveStep={changeActiveStep} />
       </form>
     );
   }
@@ -65,6 +65,7 @@ Form.propTypes = {
   currentStep: PropTypes.number.isRequired,
   nextStep: PropTypes.func.isRequired,
   changeValue: PropTypes.func.isRequired,
+  changeActiveStep: PropTypes.func.isRequired,
 };
 
 export default Form;

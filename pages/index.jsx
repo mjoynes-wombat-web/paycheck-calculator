@@ -49,7 +49,7 @@ class Index extends Component {
         new SelectInput('Pay Frequency', 'How often do you get paid?', ['Weekly', 'Bi-Weekly', 'Semi-Monthly', 'Monthly', 'Quarterly', 'Yearly']),
         new NumInput('Exemptions', 'What number of exemptions do you get?', '', 0, 0, 0, 20),
       ],
-      currentStep: 0,
+      currentStep: 7,
     };
     this.nextStep = this.nextStep.bind(this);
     this.changeActiveStep = this.changeActiveStep.bind(this);
@@ -79,8 +79,18 @@ class Index extends Component {
     const { steps, currentStep } = this.state;
     return (
       <MainTemplate>
-        <Progress steps={steps} currentStep={currentStep} changeActiveStep={this.changeActiveStep} />
-        <Form steps={steps} currentStep={currentStep} nextStep={this.nextStep} changeValue={this.changeValue} />
+        <Progress
+          steps={steps}
+          currentStep={currentStep}
+          changeActiveStep={this.changeActiveStep}
+        />
+        <Form
+          steps={steps}
+          currentStep={currentStep}
+          nextStep={this.nextStep}
+          changeValue={this.changeValue}
+          changeActiveStep={this.changeActiveStep}
+        />
       </MainTemplate>
     );
   }

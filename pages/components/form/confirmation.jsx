@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Confirmation = ({ steps, currentStep }) => (
+import SubmitButton from './buttons/submit';
+
+const Confirmation = ({ steps, currentStep, changeActiveStep }) => (
   <div className={`confirmation ${currentStep > steps.length - 1 ? 'active' : ''}`}>
     <style jsx>
       {`
@@ -10,6 +12,9 @@ const Confirmation = ({ steps, currentStep }) => (
         transition: 1s opacity;
         width: 50%;
         pointer-events: none;
+        display: flex;
+        flex-direction: column;
+        padding: 2rem;
 
         &.active {
           opacity: 1;
@@ -19,18 +24,39 @@ const Confirmation = ({ steps, currentStep }) => (
         ul {
           padding: 0;
           list-style: none;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          margin: 0;
 
           li {
-            color: white;
+            margin: 0.25rem;
+            font-size: 1.5rem;
+            min-width: 33%;
             display: flex;
+            flex-direction: column;
 
-            span {
-              display: block;
-              flex: 1;
-            }
+            a:link, a:visited {
+              padding: 0.5rem;
+              text-decoration: none;
+              text-align: center;
+              transition: transform 0.5s;
 
-            span.label {
-              text-align: right;
+              span {
+                display: block;
+                flex: 0;
+                color: white;
+              }
+
+              span.label {
+                font-size: 1.125rem;
+                margin-bottom: 0.25rem;
+              }
+
+              :hover, :focus {
+                outline: none;
+                transform: scale(1.1);
+              }
             }
           }
         }
@@ -38,14 +64,16 @@ const Confirmation = ({ steps, currentStep }) => (
       `}
     </style>
     <ul>
-      {steps.map(step => (
+      {steps.map((step, i) => (
         <li key={step.id}>
-          <span className="label">{step.shortLabel}:</span>
-          <span className="value">{step.step === 0.01 ? (step.value / 100).toFixed(2) : step.value}</span>
+          <a href={`#${step.id}`} onClick={() => changeActiveStep(i)}>
+            <span className="label">{step.shortLabel}:</span>
+            <span className="value">{step.step === 0.01 ? (step.value / 100).toFixed(2) : step.value}</span>
+          </a>
         </li>
       ))}
     </ul>
-    <button type="submit">Submit</button>
+    <SubmitButton />
   </div>
 );
 
@@ -55,6 +83,7 @@ Confirmation.propTypes = {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   })).isRequired,
   currentStep: PropTypes.number.isRequired,
+  changeActiveStep: PropTypes.func.isRequired,
 };
 
 export default Confirmation;
