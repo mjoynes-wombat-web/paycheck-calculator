@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import PaycheckItem from './paycheckItem';
 import colors from '../../../consts/colors';
 
-const PaycheckList = ({ paychecks }) => (
-  <nav>
+const PaycheckList = ({
+  paychecks, open, toggleMenu, clickedOnce,
+}) => (
+  <nav className={open ? 'open' : ''}>
     <style jsx>
       {`
       nav {
@@ -18,6 +20,46 @@ const PaycheckList = ({ paychecks }) => (
         min-height: 100%;
         z-index: 100;
         border-left: 0.125rem solid rgba(255, 255, 255, 0.10);
+        transform: translateX(100%);
+        transition: transform 0.5s;
+        box-sizing: border-box;
+
+        &.open {
+          transform: translateX(0);
+        }
+
+        button {
+          @keyframes pulse {
+            0% { transform: translateX(-100%); };
+            50% { transform: scale(1.1) translateX(-100%); };
+            100% { transform: translateX(-100%); };
+          }
+          transform: translateX(-100%);
+          box-sizing: border-box;
+          position: absolute;
+          padding: 1rem;
+          left: 0;
+          top: 0;
+          background-color: transparent;
+          border: none;
+          color: ${colors.vividGreen()};
+          transition: transform 0.5s;
+          font-family: Raleway, sans-serif;
+          transform-origin: top right;
+          font-size: 1.25rem;
+          animation-name: pulse;
+          animation-duration: 1.5s;
+          animation-iteration-count: infinite;
+
+          :focus, :hover {
+            outline: none;
+            transform: scale(1.1) translateX(-100%);
+          }
+
+          &.clicked {
+            animation-name: none;
+          }
+        }
         article {
           table {
             th {
@@ -43,7 +85,7 @@ const PaycheckList = ({ paychecks }) => (
       }
       `}
     </style>
-
+    {paychecks.length ? <button className={clickedOnce ? 'clicked' : ''} type="button" onClick={toggleMenu}>{open ? 'X' : 'History'}</button> : null }
     <article className="list">
       {paychecks.length ? (
         <>

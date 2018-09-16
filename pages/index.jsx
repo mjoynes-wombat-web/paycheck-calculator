@@ -29,12 +29,15 @@ class Index extends Component {
       paycheckError: '',
       submitted: false,
       paycheckReceived: false,
+      historyOpen: false,
+      historyClickedOnce: false,
     };
     this.nextStep = this.nextStep.bind(this);
     this.changeActiveStep = this.changeActiveStep.bind(this);
     this.changeValue = this.changeValue.bind(this);
     this.submitForm = this.submitForm.bind(this);
     this.closePaycheck = this.closePaycheck.bind(this);
+    this.toggleMenu = this.toggleMenu.bind(this);
   }
 
   submitForm(e) {
@@ -130,13 +133,18 @@ class Index extends Component {
     this.setState({ steps });
   }
 
+  toggleMenu() {
+    const { historyOpen, historyClickedOnce } = this.state;
+    this.setState({ historyOpen: !historyOpen, historyClickedOnce: true });
+  }
+
   render() {
     const {
-      steps, currentStep, paycheckError, submitted, paycheckReceived, paychecks,
+      steps, currentStep, paycheckError, submitted, paycheckReceived, paychecks, historyOpen, historyClickedOnce,
     } = this.state;
     return (
       <MainTemplate>
-        <PaycheckList paychecks={paychecks} />
+        <PaycheckList paychecks={paychecks} open={historyOpen} toggleMenu={this.toggleMenu} clickedOnce={historyClickedOnce} />
         <Progress
           steps={steps}
           currentStep={currentStep}

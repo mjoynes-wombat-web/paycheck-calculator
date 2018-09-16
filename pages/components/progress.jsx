@@ -105,7 +105,7 @@ const Progress = ({ steps, changeActiveStep, currentStep }) => {
       <span
         className="progress-bar"
         style={{
-          transform: `scaleX(${completion / 100})`,
+          transform: `scaleX(${Math.min(completion / 100, 1)})`,
         }}
       >
         {completion}% Done

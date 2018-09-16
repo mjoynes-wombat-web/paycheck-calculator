@@ -25,6 +25,7 @@ const Paycheck = ({ check, paycheckReceived, closePaycheck }) => (
         overflow: scroll;
         padding: 4rem;
         transition: box-shadow 0.5s;
+        z-index: 200;
 
         :focus {
           box-shadow: inset 0 0 1rem ${colors.vividGreen()};
