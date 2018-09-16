@@ -56,9 +56,17 @@ class Index extends Component {
       },
     }).then((response) => {
       const { paychecks, paychecksSubmitted } = this.state;
+      const taxes = response.data;
       const newPaycheck = {
         id: `paycheck${paychecksSubmitted}`,
         gross: (steps.hourlyWage.value) * (steps.hours.value / 100),
+        net: ((steps.hourlyWage.value) * (steps.hours.value / 100))
+          - Math.round(
+            (taxes.per_pay_period.federal.amount
+              + taxes.per_pay_period.fica.amount
+              + taxes.per_pay_period.state.amount)
+            * 100,
+          ),
         hourlyWage: steps.hourlyWage.value,
         hours: steps.hours.value,
         filingStatus: steps.filingStatus.options
@@ -67,7 +75,7 @@ class Index extends Component {
           .find(option => steps.payFrequency.value == option.value).text,
         usState: steps.usState.value,
         exemptions: steps.exemptions.value,
-        taxes: response.data,
+        taxes,
       };
       paychecks.unshift(newPaycheck);
 
@@ -133,7 +141,7 @@ class Index extends Component {
           changeActiveStep={this.changeActiveStep}
           submitForm={this.submitForm}
         />
-        {submitted && paycheckReceived ? <Paycheck check={paychecks[0]} /> : null}
+        {submitted ? <Paycheck check={paychecks[0]} paycheckReceived={paycheckReceived} /> : null}
         <Error message={paycheckError} />
       </MainTemplate>
     );
