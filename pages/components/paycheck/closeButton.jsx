@@ -20,7 +20,7 @@ const Close = ({ closePaycheck }) => (
         transition: transform 0.5s;
         transform-origin: top right;
 
-        :focus {
+        :focus, :hover {
           outline: none;
           transform: scale(1.3);
         }

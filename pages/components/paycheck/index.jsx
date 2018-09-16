@@ -54,13 +54,17 @@ const Paycheck = ({ check, paycheckReceived, closePaycheck }) => (
               @media screen and (max-width: 700px) {
                 min-width: 75%;
               }
+
+              h3 {
+                margin-bottom: 1rem;
+              }
             }
 
             h2, h3 {
               flex: 1;
               display: flex;
               flex-direction: column;
-              justify-content: space-between;
+              justify-content: space-around;
             }
 
             h2 {
@@ -77,7 +81,6 @@ const Paycheck = ({ check, paycheckReceived, closePaycheck }) => (
             }
             h3 {
               font-size: 2.25rem;
-              margin-bottom: 1rem;
 
               span {
                 display: block;
