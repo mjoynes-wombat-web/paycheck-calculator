@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import colors from '../../../consts/colors';
 
 import DetailItem from './list-items/detail';
+import CloseButton from './closeButton';
 
-const Paycheck = ({ check, paycheckReceived }) => (
-  <div className="wrapper">
+const Paycheck = ({ check, paycheckReceived, closePaycheck }) => (
+  <div className="wrapper" onClick={closePaycheck} onKeyDown={closePaycheck} role="button" tabIndex={0}>
     <style jsx>
       {`
       .wrapper {
@@ -23,6 +24,11 @@ const Paycheck = ({ check, paycheckReceived }) => (
         box-sizing: border-box;
         overflow: scroll;
         padding: 4rem;
+        transition: box-shadow 0.5s;
+
+        :focus {
+          box-shadow: inset 0 0 1rem ${colors.vividGreen()};
+        }
 
         article {
           box-sizing: border-box;
@@ -39,6 +45,7 @@ const Paycheck = ({ check, paycheckReceived }) => (
           .paycheck-info {
             display: flex;
             flex-wrap: wrap;
+            margin-bottom: 4rem;
             > * {
               min-width: 50%;
             }
@@ -46,9 +53,6 @@ const Paycheck = ({ check, paycheckReceived }) => (
             section {
               @media screen and (max-width: 700px) {
                 min-width: 75%;
-              }
-              &.details {
-                margin-bottom: 4rem;
               }
             }
 
@@ -127,6 +131,7 @@ const Paycheck = ({ check, paycheckReceived }) => (
                 <DetailItem label="State" detail={check.usState} />
               </ul>
             </section>
+            <CloseButton onClick={closePaycheck} />
           </div>
         </>
       ) : (
@@ -161,6 +166,7 @@ Paycheck.propTypes = {
     usState: PropTypes.string,
   }),
   paycheckReceived: PropTypes.bool.isRequired,
+  closePaycheck: PropTypes.func.isRequired,
 };
 
 Paycheck.defaultProps = {

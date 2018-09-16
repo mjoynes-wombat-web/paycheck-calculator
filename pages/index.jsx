@@ -33,6 +33,7 @@ class Index extends Component {
     this.changeActiveStep = this.changeActiveStep.bind(this);
     this.changeValue = this.changeValue.bind(this);
     this.submitForm = this.submitForm.bind(this);
+    this.closePaycheck = this.closePaycheck.bind(this);
   }
 
   submitForm(e) {
@@ -103,6 +104,12 @@ class Index extends Component {
     });
   }
 
+  closePaycheck(e) {
+    const { type, key } = e;
+    if (type === 'keydown' && key !== 'Enter') return false;
+    return this.setState({ submitted: false, paycheckReceived: false });
+  }
+
   nextStep(currentStep) {
     const { steps } = this.state;
     steps[Object.keys(steps)[currentStep]].complete = true;
@@ -141,7 +148,15 @@ class Index extends Component {
           changeActiveStep={this.changeActiveStep}
           submitForm={this.submitForm}
         />
-        {submitted ? <Paycheck check={paychecks[0]} paycheckReceived={paycheckReceived} /> : null}
+        {submitted && !paycheckError
+          ? (
+            <Paycheck
+              check={paychecks[0]}
+              paycheckReceived={paycheckReceived}
+              closePaycheck={this.closePaycheck}
+            />
+          )
+          : null}
         <Error message={paycheckError} />
       </MainTemplate>
     );
