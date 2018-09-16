@@ -75,6 +75,10 @@ const PaycheckList = ({
             box-sizing: border-box;
             overflow: scroll;
 
+            h2 {
+              padding-left: 0.75rem;
+            }
+
             table {
               th {
                 vertical-align: bottom;
