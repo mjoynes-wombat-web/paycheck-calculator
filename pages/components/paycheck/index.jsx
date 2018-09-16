@@ -137,7 +137,34 @@ const Paycheck = ({ check, paycheckReceived }) => (
 );
 
 Paycheck.propTypes = {
+  check: PropTypes.shape({
+    net: PropTypes.number,
+    gross: PropTypes.number,
+    taxes: PropTypes.shape({
+      per_pay_period: PropTypes.shape({
+        federal: PropTypes.shape({
+          amount: PropTypes.number,
+        }),
+        fica: PropTypes.shape({
+          amount: PropTypes.number,
+        }),
+        state: PropTypes.shape({
+          amount: PropTypes.number,
+        }),
+      }),
+    }),
+    exemptions: PropTypes.number,
+    filingStatus: PropTypes.string,
+    hourlyWage: PropTypes.number,
+    hours: PropTypes.number,
+    payFrequency: PropTypes.string,
+    usState: PropTypes.string,
+  }),
+  paycheckReceived: PropTypes.bool.isRequired,
+};
 
+Paycheck.defaultProps = {
+  check: {},
 };
 
 export default Paycheck;
