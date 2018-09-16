@@ -27,7 +27,8 @@ class Index extends Component {
       currentStep: 7,
       paychecks: [],
       paycheckError: '',
-      submitted: false,
+      paycheckToShow: null,
+      showPaycheck: false,
       paycheckReceived: false,
       historyOpen: false,
       historyClickedOnce: false,
@@ -38,6 +39,7 @@ class Index extends Component {
     this.submitForm = this.submitForm.bind(this);
     this.closePaycheck = this.closePaycheck.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
+    this.showPaycheck = this.showPaycheck.bind(this);
   }
 
   componentDidMount() {
@@ -56,7 +58,7 @@ class Index extends Component {
       pay_periods: steps.payFrequency.value,
       exemptions: steps.exemptions.value,
     };
-    this.setState({ submitted: true });
+    this.setState({ showPaycheck: true });
     axios({
       method: 'post',
       url: `https://taxee.io/api/v2/calculate/${(new Date()).getFullYear()}`,
@@ -109,6 +111,7 @@ class Index extends Component {
         currentStep: 0,
         steps: cleanSteps,
         paycheckReceived: true,
+        paycheckToShow: paychecks[0],
       });
     }).catch((error) => {
       this.setState({
@@ -121,7 +124,7 @@ class Index extends Component {
   closePaycheck(e) {
     const { type, key } = e;
     if (type === 'keydown' && key !== 'Enter') return false;
-    return this.setState({ submitted: false, paycheckReceived: false });
+    return this.setState({ showPaycheck: false, paycheckReceived: false });
   }
 
   nextStep(currentStep) {
@@ -148,13 +151,20 @@ class Index extends Component {
     this.setState({ historyOpen: !historyOpen, historyClickedOnce: true });
   }
 
+  showPaycheck(id) {
+    const { paychecks } = this.state;
+    const paycheck = paychecks.find(check => check.id === id);
+
+    this.setState({ paycheckToShow: paycheck, showPaycheck: true, paycheckReceived: true });
+  }
+
   render() {
     const {
-      steps, currentStep, paycheckError, submitted, paycheckReceived, paychecks, historyOpen, historyClickedOnce,
+      steps, currentStep, paycheckError, showPaycheck, paycheckReceived, paychecks, historyOpen, historyClickedOnce, paycheckToShow,
     } = this.state;
     return (
       <MainTemplate>
-        <PaycheckList paychecks={paychecks} open={historyOpen} toggleMenu={this.toggleMenu} clickedOnce={historyClickedOnce} />
+        <PaycheckList paychecks={paychecks} open={historyOpen} toggleMenu={this.toggleMenu} clickedOnce={historyClickedOnce} showPaycheck={this.showPaycheck} />
         <Progress
           steps={steps}
           currentStep={currentStep}
@@ -168,16 +178,16 @@ class Index extends Component {
           changeActiveStep={this.changeActiveStep}
           submitForm={this.submitForm}
         />
-        {submitted && !paycheckError
+        {showPaycheck && !paycheckError
           ? (
             <Paycheck
-              check={paychecks[0]}
+              check={paycheckToShow}
               paycheckReceived={paycheckReceived}
               closePaycheck={this.closePaycheck}
             />
           )
           : null}
-        <Error message={paycheckError} />
+        {paycheckError ? <Error message={paycheckError} /> : null}
       </MainTemplate>
     );
   }

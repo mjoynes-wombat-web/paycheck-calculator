@@ -5,7 +5,7 @@ import PaycheckItem from './paycheckItem';
 import colors from '../../../consts/colors';
 
 const PaycheckList = ({
-  paychecks, open, toggleMenu, clickedOnce,
+  paychecks, open, toggleMenu, clickedOnce, showPaycheck,
 }) => (
   <div className="wrapper">
     <style jsx>
@@ -25,7 +25,6 @@ const PaycheckList = ({
           position: absolute;
           right: 0;
           top: 0;
-          padding: 2rem;
           background-color: ${colors.midnightNavy(0.95)};
           min-height: 100%;
           border-left: 0.125rem solid rgba(255, 255, 255, 0.10);
@@ -71,14 +70,19 @@ const PaycheckList = ({
             }
           }
           article {
+            padding: 2rem;
+            height: 100vh;
+            box-sizing: border-box;
+            overflow: scroll;
+
             table {
               th {
                 vertical-align: bottom;
                 font-family: 'Raleway', sans-serif;
-                font-size: 1.25rem;
+                font-size: 1.5rem;
                 font-weight: normal;
               }
-              th, :global(td) {
+              th {
                 padding: 0.5rem 0.75rem;
                 text-align: left;
               }
@@ -86,7 +90,7 @@ const PaycheckList = ({
                 border-right: 0.125rem solid rgba(255, 255, 255, 0.25);
               }
               th.not-mobile, :global(td.not-mobile) {
-                @media screen and (max-width: 750px) {
+                @media screen and (max-width: 900px) {
                   display: none;
                 }
               }
@@ -116,7 +120,7 @@ const PaycheckList = ({
                 </tr>
               </thead>
               <tbody>
-                {paychecks.map(paycheck => <PaycheckItem key={paycheck.id} paycheck={paycheck} />)}
+                {paychecks.map(paycheck => <PaycheckItem key={paycheck.id} paycheck={paycheck} showPaycheck={showPaycheck} />)}
               </tbody>
             </table>
           </>
