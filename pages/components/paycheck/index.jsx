@@ -134,7 +134,7 @@ const Paycheck = ({ check, paycheckReceived, closePaycheck }) => (
                 <DetailItem label="State" detail={check.usState} />
               </ul>
             </section>
-            <CloseButton onClick={closePaycheck} />
+            <CloseButton closePaycheck={closePaycheck} />
           </div>
         </>
       ) : (

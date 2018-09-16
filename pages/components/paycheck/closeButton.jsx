@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import colors from '../../../consts/colors';
 
-const Close = ({ closePaycheck }) => (
+const CloseButton = ({ closePaycheck }) => (
   <button type="button" onClick={closePaycheck}>
     <style jsx>
       {`
@@ -31,8 +31,8 @@ const Close = ({ closePaycheck }) => (
   </button>
 );
 
-Close.propTypes = {
+CloseButton.propTypes = {
   closePaycheck: PropTypes.func.isRequired,
 };
 
-export default Close;
+export default CloseButton;
