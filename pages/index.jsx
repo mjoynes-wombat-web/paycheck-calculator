@@ -40,6 +40,12 @@ class Index extends Component {
     this.toggleMenu = this.toggleMenu.bind(this);
   }
 
+  componentDidMount() {
+    const localPaychecks = JSON.parse(localStorage.getItem('paychecks'));
+
+    if (localPaychecks && localPaychecks.length) this.setState({ paychecks: localPaychecks });
+  }
+
   submitForm(e) {
     e.preventDefault();
     const { steps } = this.state;
@@ -63,7 +69,7 @@ class Index extends Component {
       const { paychecks, paychecksSubmitted } = this.state;
       const taxes = response.data;
       const newPaycheck = {
-        id: `paycheck${paychecksSubmitted}`,
+        id: `paycheck${paychecksSubmitted}${new Date().getTime()}`,
         gross: (steps.hourlyWage.value) * (steps.hours.value / 100),
         net: ((steps.hourlyWage.value) * (steps.hours.value / 100))
           - Math.round(
@@ -93,8 +99,12 @@ class Index extends Component {
         return stepAccu;
       }, {});
 
+      const trimedPaychecks = paychecks.slice(0, 15);
+
+      localStorage.setItem('paychecks', JSON.stringify(trimedPaychecks));
+
       this.setState({
-        paychecks,
+        paychecks: trimedPaychecks,
         paychecksSubmitted: paychecksSubmitted + 1,
         currentStep: 0,
         steps: cleanSteps,
