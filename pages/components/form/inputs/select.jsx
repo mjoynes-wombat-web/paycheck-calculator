@@ -21,7 +21,7 @@ class SelectInput extends Component {
 
   render() {
     const {
-      id, shortLabel, label, complete, options, currentStep, nextStep, index, value,
+      id, shortLabel, label, complete, options, currentStep, nextStep, index, value, lastInput,
     } = this.props;
     return (
       <div className={`input-wrapper ${complete ? 'complete' : ''} ${currentStep === index ? 'active' : ''}`}>
@@ -34,7 +34,7 @@ class SelectInput extends Component {
         <select name={shortLabel} id={id} onChange={this.onChange} value={value}>
           {options.map(opt => <option key={opt.value} value={opt.value}>{opt.text}</option>)}
         </select>
-        <NextButton id={id} currentStep={currentStep} onClick={nextStep} />
+        <NextButton id={id} currentStep={currentStep} onClick={nextStep} lastInput={lastInput} />
       </div>
     );
   }
@@ -54,6 +54,7 @@ SelectInput.propTypes = {
   index: PropTypes.number.isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   changeValue: PropTypes.func.isRequired,
+  lastInput: PropTypes.bool.isRequired,
 };
 
 export default SelectInput;

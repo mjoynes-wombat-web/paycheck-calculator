@@ -37,6 +37,7 @@ class Form extends Component {
                   index={i}
                   nextStep={nextStep}
                   changeValue={changeValue}
+                  lastInput={(Object.keys(steps).length - 1) === i}
                 />
               );
             case 'SelectInput':
@@ -48,6 +49,7 @@ class Form extends Component {
                   index={i}
                   nextStep={nextStep}
                   changeValue={changeValue}
+                  lastInput={(Object.keys(steps).length - 1) === i}
                 />
               );
             default:

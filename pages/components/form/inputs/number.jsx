@@ -32,7 +32,7 @@ class NumInput extends Component {
 
   render() {
     const {
-      id, label, value, pattern, complete, step, min, max, currentStep, index, nextStep,
+      id, label, value, pattern, complete, step, min, max, currentStep, index, nextStep, lastInput,
     } = this.props;
     return (
       <div className={`input-wrapper ${complete ? 'complete' : ''} ${currentStep === index ? 'active' : ''}`}>
@@ -43,7 +43,7 @@ class NumInput extends Component {
           {label}
         </label>
         <input type="number" id={id} value={step !== 0 ? (value / 100).toFixed(2) : value} pattern={pattern} step={step} min={min} max={max} onChange={this.onChange} />
-        <NextButton id={id} currentStep={currentStep} onClick={nextStep} />
+        <NextButton id={id} currentStep={currentStep} onClick={nextStep} lastInput={lastInput} />
       </div>
     );
   }
@@ -62,6 +62,7 @@ NumInput.propTypes = {
   index: PropTypes.number.isRequired,
   nextStep: PropTypes.func.isRequired,
   changeValue: PropTypes.func.isRequired,
+  lastInput: PropTypes.bool.isRequired,
 };
 
 NumInput.defaultProps = {
