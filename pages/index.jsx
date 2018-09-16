@@ -8,6 +8,7 @@ import Progress from './components/progress';
 import Form from './components/form';
 import { NumInput, SelectInput } from '../helpers/inputClasses';
 import Error from './components/error';
+import Paycheck from './components/paycheck';
 
 class Index extends Component {
   constructor() {
@@ -25,6 +26,8 @@ class Index extends Component {
       currentStep: 0,
       paychecks: [],
       paycheckError: '',
+      submitted: false,
+      paycheckReceived: false,
     };
     this.nextStep = this.nextStep.bind(this);
     this.changeActiveStep = this.changeActiveStep.bind(this);
@@ -42,6 +45,7 @@ class Index extends Component {
       pay_periods: steps.payFrequency.value,
       exemptions: steps.exemptions.value,
     };
+    this.setState({ submitted: true });
     axios({
       method: 'post',
       url: `https://taxee.io/api/v2/calculate/${(new Date()).getFullYear()}`,
@@ -68,7 +72,11 @@ class Index extends Component {
       });
 
       this.setState({
-        paychecks, paychecksSubmitted: paychecksSubmitted + 1, currentStep: 0, steps: cleanSteps,
+        paychecks,
+        paychecksSubmitted: paychecksSubmitted + 1,
+        currentStep: 0,
+        steps: cleanSteps,
+        paycheckReceived: true,
       });
     }).catch((error) => {
       this.setState({
@@ -98,7 +106,9 @@ class Index extends Component {
   }
 
   render() {
-    const { steps, currentStep, paycheckError } = this.state;
+    const {
+      steps, currentStep, paycheckError, submitted, paycheckReceived, paychecks,
+    } = this.state;
     return (
       <MainTemplate>
         <Progress
@@ -114,6 +124,7 @@ class Index extends Component {
           changeActiveStep={this.changeActiveStep}
           submitForm={this.submitForm}
         />
+        {submitted && paycheckReceived ? <Paycheck check={paychecks[0]} /> : null}
         <Error message={paycheckError} />
       </MainTemplate>
     );
