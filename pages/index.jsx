@@ -9,6 +9,7 @@ import Form from './components/form';
 import { NumInput, SelectInput } from '../helpers/inputClasses';
 import Error from './components/error';
 import Paycheck from './components/paycheck';
+import PaycheckList from './components/paycheck-list';
 
 class Index extends Component {
   constructor() {
@@ -135,6 +136,7 @@ class Index extends Component {
     } = this.state;
     return (
       <MainTemplate>
+        <PaycheckList paychecks={paychecks} />
         <Progress
           steps={steps}
           currentStep={currentStep}
