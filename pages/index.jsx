@@ -18,7 +18,7 @@ class Index extends Component {
       steps: {
         hourlyWage: new NumInput('Hourly Wage', 'How much do you make an hour?', '', 0.01, 100),
         hours: new NumInput('Hours', 'How many hours are in this paycheck?', '', 0.01, 100),
-        filingStatus: new SelectInput('Filing Status', 'What is your filing status?', [{ value: 'single', text: 'Single' }, { value: 'married', text: 'Married' }, { value: 'married_seperately', text: 'Married Filing Separately' }, { value: 'head_of_household', text: 'Head of Household' }]),
+        filingStatus: new SelectInput('Filing Status', 'What is your filing status?', [{ value: 'single', text: 'Single' }, { value: 'married', text: 'Married' }, { value: 'married_separately', text: 'Married Filing Separately' }, { value: 'head_of_household', text: 'Head of Household' }]),
         usState: new SelectInput('US State', 'What state do you live in?', usStates.map(state => ({ value: state, text: state }))),
         payFrequency: new SelectInput('Pay Frequency', 'How often do you get paid?', [{ value: 52, text: 'Weekly' }, { value: 26, text: 'Bi-Weekly' }, { value: 24, text: 'Semi-Monthly' }, { value: 12, text: 'Monthly' }, { value: 4, text: 'Quarterly' }, { value: 1, text: 'Yearly' }]),
         exemptions: new NumInput('Exemptions', 'What number of exemptions do you get?', '', 0, 0, 0, 20),
@@ -52,13 +52,21 @@ class Index extends Component {
       data: queryString.stringify(data),
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUElfS0VZX01BTkFHRVIiLCJodHRwOi8vdGF4ZWUuaW8vdXNlcl9pZCI6IjU4NzI2MDUzY2UzN2E4MjM4NGFmYmYzMyIsImh0dHA6Ly90YXhlZS5pby9zY29wZXMiOlsiYXBpIl0sImlhdCI6MTQ4Mzg5MDc3MX0.GcPeCa2H1bi9BQx4uo_NypoQ4pGsd2aDRC9YjjvHG5s',
+        Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUElfS0VZX01BTkFHRVIiLCJodHRwOi8vdGF4ZWUuaW8vdXNlcl9pZCI6IjU4NzI2MDUzY2UzN2E4MjM4NGFmYmYzMyIsImh0dHA6Ly90YXhlZS5pby9zY29wZXMiOlsiYXBpIl0sImlhdCI6MTUzNzExNTQ5NH0.JPsTsd22uPnT5lActI4Iwkpw9KEb6dxDg7c7WEygdKM',
       },
     }).then((response) => {
       const { paychecks, paychecksSubmitted } = this.state;
       const newPaycheck = {
         id: `paycheck${paychecksSubmitted}`,
-        ...data,
+        gross: (steps.hourlyWage.value) * (steps.hours.value / 100),
+        hourlyWage: steps.hourlyWage.value,
+        hours: steps.hours.value,
+        filingStatus: steps.filingStatus.options
+          .find(option => steps.filingStatus.value === option.value).text,
+        payFrequency: steps.payFrequency.options
+          .find(option => steps.payFrequency.value == option.value).text,
+        usState: steps.usState.value,
+        exemptions: steps.exemptions.value,
         taxes: response.data,
       };
       paychecks.unshift(newPaycheck);
