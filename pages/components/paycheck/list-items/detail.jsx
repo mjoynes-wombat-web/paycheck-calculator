@@ -5,7 +5,26 @@ const DetailItem = ({ label, detail }) => (
   <li>
     <style jsx>
       {`
-      color: white;
+      li {
+        display: flex;
+        padding-right: 1rem;
+        margin: 0.5rem 0;
+
+        span {
+          align-self: flex-end;
+
+
+          &.label {
+            flex: 6;
+            margin-right: 1rem;
+            font-size: 1.25rem;
+          }
+          &.detail {
+            flex: 5;
+            font-size: 1.5rem;
+          }
+        }
+      }
       `}
     </style>
     <span className="label">{label}:</span>

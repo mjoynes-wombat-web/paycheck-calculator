@@ -23,7 +23,7 @@ class Index extends Component {
         payFrequency: new SelectInput('Pay Frequency', 'How often do you get paid?', [{ value: 52, text: 'Weekly' }, { value: 26, text: 'Bi-Weekly' }, { value: 24, text: 'Semi-Monthly' }, { value: 12, text: 'Monthly' }, { value: 4, text: 'Quarterly' }, { value: 1, text: 'Yearly' }]),
         exemptions: new NumInput('Exemptions', 'What number of exemptions do you get?', '', 0, 0, 0, 20),
       },
-      currentStep: 0,
+      currentStep: 7,
       paychecks: [],
       paycheckError: '',
       submitted: false,
