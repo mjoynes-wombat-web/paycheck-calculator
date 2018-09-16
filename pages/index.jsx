@@ -63,13 +63,14 @@ class Index extends Component {
       };
       paychecks.unshift(newPaycheck);
 
-      const cleanSteps = Object.keys(steps).map((stepName) => {
-        const cleanStep = steps[stepName];
-        cleanStep.complete = false;
-        cleanStep.valid = true;
+      const cleanSteps = Object.keys(steps).reduce((stepAccu, stepName) => {
+        const newStepAccu = stepAccu;
+        newStepAccu[stepName] = steps[stepName];
+        newStepAccu[stepName].complete = false;
+        newStepAccu[stepName].valid = true;
 
-        return cleanStep;
-      });
+        return stepAccu;
+      }, {});
 
       this.setState({
         paychecks,
