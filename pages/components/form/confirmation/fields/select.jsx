@@ -10,7 +10,8 @@ const SelectField = ({ step, changeActiveStep, index }) => (
     </style>
     <a href={`#${step.id}`} onClick={() => changeActiveStep(index)}>
       <span className="label">{step.shortLabel}:</span>
-      <span className="value">{step.options.find(option => option.value === step.value).text}</span>
+      <span className="value">{step.options.find(option => (option.value == step.value)).text}
+      </span>
     </a>
   </li>
 );
