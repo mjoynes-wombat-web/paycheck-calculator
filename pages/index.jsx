@@ -10,6 +10,9 @@ import { NumInput, SelectInput } from '../helpers/inputClasses';
 import Error from './components/error';
 import Paycheck from './components/paycheck';
 import PaycheckList from './components/paycheck-list';
+import TaxBrackets from './components/taxBrackets';
+
+import authToken from '../consts/authToken';
 
 class Index extends Component {
   constructor() {
@@ -32,6 +35,7 @@ class Index extends Component {
       paycheckReceived: false,
       historyOpen: false,
       historyClickedOnce: false,
+      openTaxBrackets: true,
     };
     this.nextStep = this.nextStep.bind(this);
     this.changeActiveStep = this.changeActiveStep.bind(this);
@@ -40,6 +44,7 @@ class Index extends Component {
     this.closePaycheck = this.closePaycheck.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
     this.showPaycheck = this.showPaycheck.bind(this);
+    this.closeTaxBrackets = this.closeTaxBrackets.bind(this);
   }
 
   componentDidMount() {
@@ -65,7 +70,7 @@ class Index extends Component {
       data: queryString.stringify(data),
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUElfS0VZX01BTkFHRVIiLCJodHRwOi8vdGF4ZWUuaW8vdXNlcl9pZCI6IjU4NzI2MDUzY2UzN2E4MjM4NGFmYmYzMyIsImh0dHA6Ly90YXhlZS5pby9zY29wZXMiOlsiYXBpIl0sImlhdCI6MTUzNzExNTQ5NH0.JPsTsd22uPnT5lActI4Iwkpw9KEb6dxDg7c7WEygdKM',
+        Authorization: authToken,
       },
     }).then((response) => {
       const { paychecks, paychecksSubmitted } = this.state;
@@ -147,7 +152,7 @@ class Index extends Component {
   }
 
   toggleMenu() {
-    const { historyOpen, historyClickedOnce } = this.state;
+    const { historyOpen } = this.state;
     this.setState({ historyOpen: !historyOpen, historyClickedOnce: true });
   }
 
@@ -158,13 +163,32 @@ class Index extends Component {
     this.setState({ paycheckToShow: paycheck, showPaycheck: true, paycheckReceived: true });
   }
 
+  closeTaxBrackets() {
+    this.setState({ openTaxBrackets: false });
+  }
+
   render() {
     const {
-      steps, currentStep, paycheckError, showPaycheck, paycheckReceived, paychecks, historyOpen, historyClickedOnce, paycheckToShow,
+      steps,
+      currentStep,
+      paycheckError,
+      showPaycheck,
+      paycheckReceived,
+      paychecks,
+      historyOpen,
+      historyClickedOnce,
+      paycheckToShow,
+      openTaxBrackets,
     } = this.state;
     return (
       <MainTemplate>
-        <PaycheckList paychecks={paychecks} open={historyOpen} toggleMenu={this.toggleMenu} clickedOnce={historyClickedOnce} showPaycheck={this.showPaycheck} />
+        <PaycheckList
+          paychecks={paychecks}
+          open={historyOpen}
+          toggleMenu={this.toggleMenu}
+          clickedOnce={historyClickedOnce}
+          showPaycheck={this.showPaycheck}
+        />
         <Progress
           steps={steps}
           currentStep={currentStep}
@@ -188,6 +212,7 @@ class Index extends Component {
           )
           : null}
         {paycheckError ? <Error message={paycheckError} /> : null}
+        {openTaxBrackets ? <TaxBrackets closeTaxBrackets={this.closeTaxBrackets} /> : null}
       </MainTemplate>
     );
   }

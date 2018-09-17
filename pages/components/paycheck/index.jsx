@@ -4,36 +4,14 @@ import PropTypes from 'prop-types';
 import colors from '../../../consts/colors';
 
 import DetailItem from './list-items/detail';
-import CloseButton from './closeButton';
+import ModalWrapper from '../modalWrapper';
 
 const Paycheck = ({ check, paycheckReceived, closePaycheck }) => (
-  <div className="wrapper" onClick={closePaycheck} onKeyDown={closePaycheck} role="button" tabIndex={0}>
-    <style jsx>
-      {`
-      .wrapper {
-        color: white;
-        position: fixed;
-        width: 100vw;
-        height: 100vh;
-        top: 0;
-        left: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: ${colors.midnightNavy(0.95)};
-        box-sizing: border-box;
-        overflow: scroll;
-        padding: 4rem;
-        transition: box-shadow 0.5s;
-        z-index: 200;
-
-        :focus {
-          box-shadow: inset 0 0 1rem ${colors.vividGreen()};
-        }
-
+  <ModalWrapper close={closePaycheck}>
+    <article className="paycheck" onClick={e => e.stopPropagation()}>
+      <style jsx>
+        {`
         article {
-          box-sizing: border-box;
-          max-height: 100%;
           h1 {
             font-size: 2.5rem;
 
@@ -46,7 +24,6 @@ const Paycheck = ({ check, paycheckReceived, closePaycheck }) => (
           .paycheck-info {
             display: flex;
             flex-wrap: wrap;
-            margin-bottom: 4rem;
             > * {
               min-width: 50%;
             }
@@ -100,10 +77,8 @@ const Paycheck = ({ check, paycheckReceived, closePaycheck }) => (
             }
           }
         }
-      }
       `}
-    </style>
-    <article className="paycheck">
+      </style>
       {paycheckReceived ? (
         <>
           <h1>Paycheck</h1>
@@ -135,14 +110,13 @@ const Paycheck = ({ check, paycheckReceived, closePaycheck }) => (
                 <DetailItem label="State" detail={check.usState} />
               </ul>
             </section>
-            <CloseButton closePaycheck={closePaycheck} />
           </div>
         </>
       ) : (
         <h1 className="calculating">Calculating</h1>
       )}
     </article>
-  </div>
+  </ModalWrapper>
 );
 
 Paycheck.propTypes = {
