@@ -20,8 +20,8 @@ class Index extends Component {
     this.state = {
       paychecksSubmitted: 0,
       steps: {
-        hourlyWage: new NumInput('Hourly Wage', 'How much do you make an hour?', '', 0.01, 100),
-        hours: new NumInput('Hours', 'How many hours are in this paycheck?', '', 0.01, 100),
+        hourlyWage: new NumInput('Hourly Wage', 'How much do you make an hour?', '', 0.01),
+        hours: new NumInput('Hours', 'How many hours are in this paycheck?', '', 0.01),
         filingStatus: new SelectInput('Filing Status', 'What is your filing status?', [{ value: 'single', text: 'Single' }, { value: 'married', text: 'Married' }, { value: 'married_separately', text: 'Married Filing Separately' }, { value: 'head_of_household', text: 'Head of Household' }]),
         usState: new SelectInput('US State', 'What state do you live in?', usStates.map(state => ({ value: state, text: state }))),
         payFrequency: new SelectInput('Pay Frequency', 'How often do you get paid?', [{ value: 52, text: 'Weekly' }, { value: 26, text: 'Bi-Weekly' }, { value: 24, text: 'Semi-Monthly' }, { value: 12, text: 'Monthly' }, { value: 4, text: 'Quarterly' }, { value: 1, text: 'Yearly' }]),
@@ -143,6 +143,7 @@ class Index extends Component {
   }
 
   changeValue(value, key, valid) {
+    console.log(valid);
     const { steps } = this.state;
     steps[key].value = value;
     steps[key].valid = valid;

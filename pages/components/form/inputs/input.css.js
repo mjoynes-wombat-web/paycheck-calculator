@@ -17,6 +17,27 @@ const inputCSS = css`
       pointer-events: all;
     }
 
+    &.error {
+      input, select {
+        border-color: ${colors.errorRed()};
+      }
+
+      p.instructions {
+        visibility: initial;
+        opacity: 1;
+      }
+    }
+
+    p.instructions {
+      visibility: hidden;
+      opacity: 0;
+      margin: 0;
+      margin-top: -1rem;
+      color: ${colors.errorRed()};
+      text-align: center;
+      transition: opacity 0.5s;
+    }
+
     label {
       color: white;
       font-size: 2rem;
@@ -33,7 +54,7 @@ const inputCSS = css`
       color: white;
       font-size: 2rem;
       appearance: none;
-      transition: transform 0.5s, box-shadow 0.5s;
+      transition: transform 0.5s, box-shadow 0.5s, border-color 0.5s;
 
       :focus, :hover {
         outline: none;

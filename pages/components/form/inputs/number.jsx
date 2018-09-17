@@ -16,33 +16,34 @@ class NumInput extends Component {
       changeValue, id, min, max, step,
     } = this.props;
     const { target } = e;
-    const { validity: { valid, stepMismatch } } = target;
+    const { validity: { valid }, validity } = target;
     let { value } = target;
     value = value.split('.').join('');
+    value = parseInt(value, 10);
     if (step === 0.01) {
       value = value.length < 3 ? `${value}0` : value;
       value = parseFloat(value);
-      if (Number.isNaN(value) || value < min * 100) value = min * 100;
     } else {
       value = parseFloat(value);
     }
-    if (max && value > max) value = max;
-    return changeValue(value, id, valid || stepMismatch);
+    return changeValue(value, id, (!Number.isNaN(value) && value >= min * 100 && ((value <= max) || (max === null))));
   }
 
   render() {
     const {
-      id, label, value, pattern, complete, step, min, max, currentStep, index, nextStep, lastInput,
+      id, label, value, pattern, complete, step, min, max, currentStep, index, nextStep, lastInput, valid,
     } = this.props;
+    console.log(valid);
     return (
-      <div className={`input-wrapper ${complete ? 'complete' : ''} ${currentStep === index ? 'active' : ''}`}>
+      <div className={`input-wrapper ${complete ? 'complete' : ''} ${currentStep === index ? 'active' : ''} ${!valid && value ? 'error' : ''}`}>
         <style jsx>
           {inputCSS}
         </style>
         <label htmlFor={id}>
           {label}
         </label>
-        <input type="number" id={id} value={step !== 0 ? (value / 100).toFixed(2) : value} pattern={pattern} step={step} min={min} max={max} onChange={this.onChange} />
+        <input type="number" id={id} value={step !== 0 ? (value / 100).toFixed(2) : value} pattern={pattern} step={step} min={min} max={max} onChange={this.onChange} placeholder="0" required />
+        <p className="instructions">The number needs to be more than {min} {max ? `and less than ${max}` : ''}.</p>
         <NextButton id={id} currentStep={currentStep} onClick={nextStep} lastInput={lastInput} />
       </div>
     );
@@ -63,6 +64,7 @@ NumInput.propTypes = {
   nextStep: PropTypes.func.isRequired,
   changeValue: PropTypes.func.isRequired,
   lastInput: PropTypes.bool.isRequired,
+  valid: PropTypes.bool.isRequired,
 };
 
 NumInput.defaultProps = {

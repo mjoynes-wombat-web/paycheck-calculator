@@ -7,18 +7,18 @@ export class Input {
     this.label = label;
     this.pattern = pattern;
     this.complete = false;
-    this.valid = true;
   }
 }
 
 export class NumInput extends Input {
-  constructor(text, label, pattern, step = 0, value, min = 1, max = null) {
+  constructor(text, label, pattern, step = 0, value = 0.00, min = 1, max = null) {
     super(text, label, pattern);
     this.value = value;
     this.type = 'number';
     this.step = step;
     this.min = min;
     this.max = max;
+    this.valid = false;
   }
 }
 
@@ -28,5 +28,6 @@ export class SelectInput extends Input {
     this.value = options[0].value;
     this.type = 'select';
     this.options = options;
+    this.valid = true;
   }
 }
