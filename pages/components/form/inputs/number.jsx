@@ -49,7 +49,7 @@ class NumInput extends Component {
       valid,
     } = this.props;
     return (
-      <div className={`input-wrapper ${complete ? 'complete' : ''} ${currentStep === index ? 'active' : ''} ${!valid && value ? 'error' : ''}`}>
+      <div className={`input-wrapper ${complete ? 'complete' : ''} ${currentStep === index ? 'active' : ''} ${!valid && !Number.isNaN(value) ? 'error' : ''}`}>
         <style jsx>
           {inputCSS}
         </style>
