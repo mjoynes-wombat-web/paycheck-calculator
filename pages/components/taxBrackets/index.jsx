@@ -66,7 +66,7 @@ class TaxBrackets extends Component {
           <article onClick={e => e.stopPropagation()}>
             {taxBracketsLoaded ? (
             <>
-              <h1>Federal Tax Brackets</h1>
+              <h1>{(new Date()).getFullYear()} Federal Tax Brackets</h1>
               <Tabs changeTab={this.changeTab} currentTab={currentTab} />
               <BracketDetails data={taxBrackets[currentTab]} />
             </>

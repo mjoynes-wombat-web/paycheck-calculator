@@ -11,6 +11,7 @@ import Error from './components/error';
 import Paycheck from './components/paycheck';
 import PaycheckList from './components/paycheck-list';
 import TaxBrackets from './components/taxBrackets';
+import OpenTaxBrackets from './components/taxBrackets/openButton';
 
 import authToken from '../consts/authToken';
 
@@ -47,6 +48,7 @@ class Index extends Component {
     this.showPaycheck = this.showPaycheck.bind(this);
     this.closeTaxBrackets = this.closeTaxBrackets.bind(this);
     this.checkValidity = this.checkValidity.bind(this);
+    this.toggleTaxBrackets = this.toggleTaxBrackets.bind(this);
   }
 
   componentDidMount() {
@@ -183,6 +185,11 @@ class Index extends Component {
     this.setState({ openTaxBrackets: false });
   }
 
+  toggleTaxBrackets() {
+    const { openTaxBrackets } = this.state;
+    this.setState({ openTaxBrackets: !openTaxBrackets });
+  }
+
   render() {
     const {
       steps,
@@ -231,6 +238,7 @@ class Index extends Component {
           : null}
         {paycheckError ? <Error message={paycheckError} /> : null}
         {openTaxBrackets ? <TaxBrackets closeTaxBrackets={this.closeTaxBrackets} /> : null}
+        <OpenTaxBrackets toggleTaxBrackets={this.toggleTaxBrackets} />
       </MainTemplate>
     );
   }
