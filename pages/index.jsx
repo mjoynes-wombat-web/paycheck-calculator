@@ -27,7 +27,7 @@ class Index extends Component {
         payFrequency: new SelectInput('Pay Frequency', 'How often do you get paid?', [{ value: 52, text: 'Weekly' }, { value: 26, text: 'Bi-Weekly' }, { value: 24, text: 'Semi-Monthly' }, { value: 12, text: 'Monthly' }, { value: 4, text: 'Quarterly' }, { value: 1, text: 'Yearly' }]),
         exemptions: new NumInput('Exemptions', 'What number of exemptions do you get?', '', 0, 0, 0, 20),
       },
-      currentStep: 7,
+      currentStep: 0,
       paychecks: [],
       paycheckError: '',
       paycheckToShow: null,
@@ -35,7 +35,8 @@ class Index extends Component {
       paycheckReceived: false,
       historyOpen: false,
       historyClickedOnce: false,
-      openTaxBrackets: true,
+      openTaxBrackets: false,
+      valid: false,
     };
     this.nextStep = this.nextStep.bind(this);
     this.changeActiveStep = this.changeActiveStep.bind(this);
@@ -45,6 +46,7 @@ class Index extends Component {
     this.toggleMenu = this.toggleMenu.bind(this);
     this.showPaycheck = this.showPaycheck.bind(this);
     this.closeTaxBrackets = this.closeTaxBrackets.bind(this);
+    this.checkValidity = this.checkValidity.bind(this);
   }
 
   componentDidMount() {
@@ -135,15 +137,27 @@ class Index extends Component {
   nextStep(currentStep) {
     const { steps } = this.state;
     steps[Object.keys(steps)[currentStep]].complete = true;
-    this.setState({ currentStep: currentStep + 1, steps });
+    this.setState({ currentStep: currentStep + 1, steps, valid: this.checkValidity() });
   }
 
   changeActiveStep(step) {
-    this.setState({ currentStep: step });
+    this.setState({ currentStep: step, valid: this.checkValidity() });
+  }
+
+  checkValidity() {
+    const { steps } = this.state;
+    const inValid = Object.keys(steps).find((stepName) => {
+      if (steps[stepName].constructor.name === 'NumInput') {
+        return !(!Number.isNaN(steps[stepName].value) && steps[stepName].value >= (steps[stepName].min * 100) && ((steps[stepName].value <= steps[stepName].max) || (steps[stepName].max === null)));
+      }
+      return steps[stepName].valid === false;
+    });
+
+    if (inValid) return false;
+    return true;
   }
 
   changeValue(value, key, valid) {
-    console.log(valid);
     const { steps } = this.state;
     steps[key].value = value;
     steps[key].valid = valid;

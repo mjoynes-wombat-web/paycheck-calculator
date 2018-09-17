@@ -18,7 +18,7 @@ export class NumInput extends Input {
     this.step = step;
     this.min = min;
     this.max = max;
-    this.valid = false;
+    this.valid = value <= max && value >= min;
   }
 }
 

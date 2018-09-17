@@ -16,7 +16,6 @@ class NumInput extends Component {
       changeValue, id, min, max, step,
     } = this.props;
     const { target } = e;
-    const { validity: { valid }, validity } = target;
     let { value } = target;
     value = value.split('.').join('');
     value = parseInt(value, 10);
@@ -26,14 +25,29 @@ class NumInput extends Component {
     } else {
       value = parseFloat(value);
     }
-    return changeValue(value, id, (!Number.isNaN(value) && value >= min * 100 && ((value <= max) || (max === null))));
+    return changeValue(
+      value,
+      id,
+      (!Number.isNaN(value) && value >= (min * 100) && ((value <= max) || (max === null))),
+    );
   }
 
   render() {
     const {
-      id, label, value, pattern, complete, step, min, max, currentStep, index, nextStep, lastInput, valid,
+      id,
+      label,
+      value,
+      pattern,
+      complete,
+      step,
+      min,
+      max,
+      currentStep,
+      index,
+      nextStep,
+      lastInput,
+      valid,
     } = this.props;
-    console.log(valid);
     return (
       <div className={`input-wrapper ${complete ? 'complete' : ''} ${currentStep === index ? 'active' : ''} ${!valid && value ? 'error' : ''}`}>
         <style jsx>
