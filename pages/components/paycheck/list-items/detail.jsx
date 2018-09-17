@@ -11,8 +11,7 @@ const DetailItem = ({ label, detail }) => (
         margin: 0.5rem 0;
 
         span {
-          align-self: flex-end;
-
+          align-self: center;
 
           &.label {
             flex: 6;
