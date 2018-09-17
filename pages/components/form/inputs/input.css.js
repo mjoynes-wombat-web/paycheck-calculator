@@ -65,6 +65,13 @@ const inputCSS = css`
         box-shadow: 0.125rem 0.125rem 0.125rem black;
       }
     }
+
+    select {
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='white'><polygon points='0,0 100,0 50,50'/></svg>") ;
+      background-size: 1rem;
+      background-position: calc(100% - 2rem) 60%;
+      background-repeat: no-repeat;
+    }
   }
 `;
 
