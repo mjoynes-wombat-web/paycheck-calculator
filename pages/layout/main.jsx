@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import 'normalize-css';
+import 'normalize-css/normalize';
 
 import Header from '../components/header';
 import colors from '../../consts/colors';
