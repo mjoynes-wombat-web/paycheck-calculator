@@ -7,7 +7,7 @@ const buttonCSS = css`
     background-color: ${colors.vividGreen()};
     border: none;
     color: ${colors.midnightNavy()};
-    transition: transform 0.5s;
+    transition: transform 0.5s, background-color 0.5s;
     font-family: Raleway, sans-serif;
     font-size: 1.75rem;
     padding: 0.75rem;
@@ -19,6 +19,11 @@ const buttonCSS = css`
     &:focus, &:hover {
       transform: scale(1.1);
       outline: none;
+    }
+
+    &:disabled {
+      background-color: ${colors.errorRed()};
+      cursor: not-allowed;
     }
   }
 `;

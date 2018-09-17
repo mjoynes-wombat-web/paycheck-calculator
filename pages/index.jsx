@@ -57,7 +57,8 @@ class Index extends Component {
 
   submitForm(e) {
     e.preventDefault();
-    const { steps } = this.state;
+    const { steps, valid } = this.state;
+    if (!valid) return null;
     const data = {
       pay_rate: (steps.hourlyWage.value / 100) * (steps.hours.value / 100),
       filing_status: steps.filingStatus.value,
@@ -66,7 +67,7 @@ class Index extends Component {
       exemptions: steps.exemptions.value,
     };
     this.setState({ showPaycheck: true });
-    axios({
+    return axios({
       method: 'post',
       url: `https://taxee.io/api/v2/calculate/${(new Date()).getFullYear()}`,
       data: queryString.stringify(data),
@@ -194,6 +195,7 @@ class Index extends Component {
       historyClickedOnce,
       paycheckToShow,
       openTaxBrackets,
+      valid,
     } = this.state;
     return (
       <MainTemplate>
@@ -216,6 +218,7 @@ class Index extends Component {
           changeValue={this.changeValue}
           changeActiveStep={this.changeActiveStep}
           submitForm={this.submitForm}
+          valid={valid}
         />
         {showPaycheck && !paycheckError
           ? (

@@ -29,6 +29,7 @@ const inputCSS = css`
     }
 
     p.instructions {
+      font-size: 1.25rem;
       visibility: hidden;
       opacity: 0;
       margin: 0;
@@ -36,6 +37,8 @@ const inputCSS = css`
       color: ${colors.errorRed()};
       text-align: center;
       transition: opacity 0.5s;
+      max-width: 35ch;
+      margin: 0 auto;
     }
 
     label {

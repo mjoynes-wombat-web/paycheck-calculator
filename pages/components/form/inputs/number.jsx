@@ -57,7 +57,7 @@ class NumInput extends Component {
           {label}
         </label>
         <input type="number" id={id} value={step !== 0 ? (value / 100).toFixed(2) : value} pattern={pattern} step={step} min={min} max={max} onChange={this.onChange} placeholder="0" required />
-        <p className="instructions">The number needs to be more than {min} {max ? `and less than ${max}` : ''}.</p>
+        <p className="instructions">The number needs to be more than {min}{max ? ` and less than ${max}` : ''}.</p>
         <NextButton id={id} currentStep={currentStep} onClick={nextStep} lastInput={lastInput} />
       </div>
     );

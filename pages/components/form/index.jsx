@@ -6,7 +6,7 @@ import SelectInput from './inputs/select';
 import Confirmation from './confirmation';
 
 const Form = ({
-  steps, currentStep, nextStep, changeValue, changeActiveStep, submitForm,
+  steps, currentStep, nextStep, changeValue, changeActiveStep, submitForm, valid,
 }) => (
   <form>
     <style jsx>
@@ -51,6 +51,7 @@ const Form = ({
       currentStep={currentStep}
       changeActiveStep={changeActiveStep}
       submitForm={submitForm}
+      valid={valid}
     />
   </form>
 );

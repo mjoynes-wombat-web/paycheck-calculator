@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import SubmitButton from '../buttons/submit';
 import NumberField from './fields/number';
 import SelectField from './fields/select';
+import colors from '../../../../consts/colors';
 
 const Confirmation = ({
-  steps, currentStep, changeActiveStep, submitForm,
+  steps, currentStep, changeActiveStep, submitForm, valid,
 }) => (
-  <div className={`confirmation ${currentStep > Object.keys(steps).length - 1 ? 'active' : ''}`}>
+  <div className={`confirmation ${currentStep > Object.keys(steps).length - 1 ? 'active' : ''} ${valid ? '' : 'invalid'}`}>
     <style jsx>
       {`
       .confirmation {
@@ -23,6 +24,27 @@ const Confirmation = ({
         &.active {
           opacity: 1;
           pointer-events: all;
+        }
+
+        p.instructions {
+          font-size: 1.25rem;
+          visibility: hidden;
+          opacity: 0;
+          margin: 0;
+          bottom: -1rem;
+          position: relative;
+          color: ${colors.errorRed()};
+          text-align: center;
+          transition: opacity 0.5s;
+          max-width: 35ch;
+          margin: 0 auto;
+        }
+
+        &.invalid {
+          p.instructions {
+            visibility: initial;
+            opacity: 1;
+          }
         }
 
         ul {
@@ -62,7 +84,8 @@ const Confirmation = ({
         }
       })}
     </ul>
-    <SubmitButton onClick={submitForm} />
+    <p className="instructions">Please correct the form. White steps are incomplete and red steps have errors.</p>
+    <SubmitButton onClick={submitForm} valid={valid} />
   </div>
 );
 
